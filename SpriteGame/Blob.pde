@@ -35,12 +35,12 @@ class Blob extends Sprite
   {
     if(this.collidesWith(color(128, 0, 200)))
     {
-      dx *= -1;
-      dy *= -1;
+      dx *= -1; //*= means multiply by
+      dy *= -1; //dx and dy are the speed (dx/dy=speed)
     }
     
     // because I don't want to rewrite all the code in the Sprite.move() method, I can call it here using "super"
-    super.move();
+    super.move(); //means look at my parent [class] and go to that class
   }
   
   // This is the method that is /absolutely/ required.

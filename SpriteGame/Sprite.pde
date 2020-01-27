@@ -95,13 +95,13 @@ abstract class Sprite
   // bounces off the walls
   void move()
   {
-    x += dx;
+    x += dx; //moving the location by the speed and direction
     y += dy;
     
     // make sure we don't go out of bounds
-    if(x < 0)
+    if(x < 0) //limits on where it can go
     { 
-      x += width;
+      x += width; //width is the width of the screen
     }
     if(x > width) 
     {
@@ -109,7 +109,7 @@ abstract class Sprite
     }
     if(y < 0) 
     {
-      y += height;
+      y += height; //height is the height of the screen
     }
     if(y > height)
     {
