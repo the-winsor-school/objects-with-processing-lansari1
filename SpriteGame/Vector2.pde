@@ -13,6 +13,26 @@ class Vector2
   {
     return new Vector2(this.x + other.x, this.y + other.y); //new vector that is the sum of the x coordinates and sum of the y coordinates
   }
+  
+  // Do subtraction~
+  Vector2 subtract(Vector2 other)
+  {
+    return new Vector2(this.x - other.x, this.y - other.y);
+  }
+  
+  //compute the dot product x1*x2 + y1*y2
+  float dotProduct(Vector2 other)
+  {
+    float prod = this.x * other.x + this.y * other.y;
+    return prod;
+  }
+  
+  // compute the magnitude of this vector.
+  float magnitude()
+  {
+    return sqrt(x*x + y*y);
+  }
+  
 }
 
 //Vector2=return type, add=name, Vector2 other=parameters, Vector2 add(Vector2 other)=method header
