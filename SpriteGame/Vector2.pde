@@ -11,6 +11,8 @@ class Vector2
   
   Vector2 add(Vector2 other) //Vector2 at the beginning of the line is the ReturnType and add is the method
   {
-    return new Vector2(this.x + other.x, this.y + other.y) //new vector that is the sum of the x coordinates and sum of the y coordinates
+    return new Vector2(this.x + other.x, this.y + other.y); //new vector that is the sum of the x coordinates and sum of the y coordinates
   }
 }
+
+//Vector2=return type, add=name, Vector2 other=parameters, Vector2 add(Vector2 other)=method header
