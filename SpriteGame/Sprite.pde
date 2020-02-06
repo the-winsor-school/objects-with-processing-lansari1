@@ -6,40 +6,58 @@
 abstract class Sprite
 {
   // this Sprite's current location.
-  float x, y;
+  //float x, y;
   
   // this Sprite's current velocity vector.
-  float dx, dy;
+  //float dx, dy;
+  
+  // replaced this
+  // this Sprite's current location.
+  Vector2 location;
+  
+  // this Sprite's current velocity vector.
+  Vector2 velocity;
+  
   
   // initialize a Sprite at a given coordinate.
   Sprite(float x, float y)
   {
-    this.x = x;
-    this.y = y;
+    //this.x = x;
+    //this.y = y;
     
-    this.dx = 0;
-    this.dy = 0;
+    //this.dx = 0;
+    //this.dy = 0;
+    
+    // Altered the "Implementation" without changing the "Interface" of this class.
+    
+    this.location = new Vector2(x, y);
+    this.velocity = new Vector2(0, 0);
   }
   
   // initalize a Sprite at a given coordinate with a given velocity.
   Sprite(float x, float y, float dx, float dy)
   {
-    this.x = x;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
+    //this.x = x;
+    //this.y = y;
+    //this.dx = dx;
+    //this.dy = dy;
+    
+    this.location = new Vector2(x, y);
+    this.velocity = new Vector2(dx, dy);
   }
   
   // check to see if this Sprite is sitting on a particular color.
   boolean collidesWith(color c)
   {
-    return get((int)x,(int)y)==c;
+    // we will need to replace 'x' with 'location.x' and 'y' with 'location.y' thoughout.
+    return get((int)location.x,(int)location.y)==c;
   }
   
   // make this Sprite move at the speed := |<dx, dy>| 
   // directly toward another Sprite
   void chase(Sprite other)
   {
+    /*
     float speed = sqrt(dx*dx + dy*dy);
     float delX = other.x - this.x;
     float delY = other.y - this.y;
@@ -47,6 +65,17 @@ abstract class Sprite
     
     if(delX != 0) x += (delX / mag) * speed;
     if(delY != 0) y += (delY / mag) * speed;
+    */
+    
+    // Do the same exact calculations, but now using Vectors
+    float speed = velocity.magnitude();
+    
+    Vector2 diff = other.location.subtract(this.location);
+    float mag = diff.magnitude();
+    
+    if(diff.x != 0) location.x += (diff.x / mag) * speed;
+    
+    if(diff.y != 0) location.y += (diff.y / mag) * speed;
   }
   
   // make this Sprite move at the speed := |<dx, dy>| 
