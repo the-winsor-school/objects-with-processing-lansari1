@@ -15,8 +15,8 @@ class Blob extends Sprite
   {
     // super calls the Sprite(x, y) constructor method.
     super(x, y);
-    this.dx = 1;
-    this.dy = 1.5;
+    this.velocity.x = 1;
+    this.velocity.y = 1.5;
     myColor = c;
     radius = r;
   }
@@ -35,8 +35,8 @@ class Blob extends Sprite
   {
     if(this.collidesWith(color(128, 0, 200)))
     {
-      dx *= -1; //*= means multiply by
-      dy *= -1; //dx and dy are the speed (dx/dy=speed)
+      velocity.x *= -1; //*= means multiply by
+      velocity.y *= -1; //dx and dy are the speed (dx/dy=speed)
     }
     
     // because I don't want to rewrite all the code in the Sprite.move() method, I can call it here using "super"
@@ -48,6 +48,6 @@ class Blob extends Sprite
   void drawSprite()
   {
     fill(myColor);
-    ellipse(x, y, radius, radius);
+    ellipse(location.x, location.y, radius, radius);
   }
 }

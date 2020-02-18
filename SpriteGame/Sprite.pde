@@ -68,12 +68,15 @@ abstract class Sprite
     */
     
     // Do the same exact calculations, but now using Vectors
-    float speed = velocity.magnitude();
+    float speed = velocity.magnitude(); //velocity.magnitude() = sqrt(dx*dx + dy*dy)
+    
+    //the interface is the names of all these things (add, mag, etc)
+    //the actual code behind the interface is the implementation (but it's not important to the interface, don't have to understand how it works in order to use it)
     
     Vector2 diff = other.location.subtract(this.location);
     float mag = diff.magnitude();
     
-    if(diff.x != 0) location.x += (diff.x / mag) * speed;
+    if(diff.x != 0) location.x += (diff.x / mag) * speed; //diff is a vector and mag is the distance
     
     if(diff.y != 0) location.y += (diff.y / mag) * speed;
   }
@@ -83,74 +86,74 @@ abstract class Sprite
   // a minimum follow distance
   void chase(Sprite other, float minFollowDistance)
   {
-    float speed = sqrt(dx*dx + dy*dy);
-    float delX = other.x - this.x;
-    float delY = other.y - this.y;
+    float speed = sqrt(velocity.x*velocity.x + velocity.y*velocity.y);
+    float delX = other.location.x - this.location.x;
+    float delY = other.location.y - this.location.y;
     float mag = sqrt(delX*delX + delY*delY);
     
     if(mag > 0 && mag <= minFollowDistance) 
     {
       if(delY < delX)
       {
-        x -= (delY / mag) * speed * 0.5;
-        y += (delX / mag) * speed * 0.5;
+        location.x -= (delY / mag) * speed * 0.5;
+        location.y += (delX / mag) * speed * 0.5;
       }
       else
       {
-        x += (delY / mag) * speed * 0.5;
-        y -= (delX / mag) * speed * 0.5;
+        location.x += (delY / mag) * speed * 0.5;
+        location.y -= (delX / mag) * speed * 0.5;
       }
       return;
     }
     
-    if(delX != 0) x += (delX / mag) * speed;
-    if(delY != 0) y += (delY / mag) * speed;
+    if(delX != 0) location.x += (delX / mag) * speed;
+    if(delY != 0) location.y += (delY / mag) * speed;
   }
   
   // make this Sprite move at the speed := |<dx, dy>|
   // directly toward your mouse pofloater!
   void followMouse()
   {
-    float speed = sqrt(dx*dx + dy*dy);
-    float delX = mouseX - this.x;
-    float delY = mouseY - this.y;
+    float speed = sqrt(velocity.x*velocity.x + velocity.y*velocity.y);
+    float delX = mouseX - this.location.x;
+    float delY = mouseY - this.location.y;
     float mag = sqrt(delX*delX + delY*delY);
     
-    if(delX != 0) x += (delX / mag) * speed;
-    if(delY != 0) y += (delY / mag) * speed;
+    if(delX != 0) location.x += (delX / mag) * speed;
+    if(delY != 0) location.y += (delY / mag) * speed;
   }
   
   // move this sprite according to it's current velocity vector
   // bounces off the walls
   void move()
   {
-    x += dx; //moving the location by the speed and direction
-    y += dy;
+    location.x += velocity.x; //moving the location by the speed and direction
+    location.y += velocity.y;
     
     // make sure we don't go out of bounds
-    if(x < 0) //limits on where it can go
+    if(location.x < 0) //limits on where it can go
     { 
-      x += width; //width is the width of the screen
+      location.x += width; //width is the width of the screen
     }
-    if(x > width) 
+    if(location.x > width) 
     {
-      x -= width;
+      location.x -= width;
     }
-    if(y < 0) 
+    if(location.y < 0) 
     {
-      y += height; //height is the height of the screen
+      location.y += height; //height is the height of the screen
     }
-    if(y > height)
+    if(location.y > height)
     {
-      y -= height;
+      location.y -= height;
     }
   }
   
   // get the distance between centers of this Sprite and another
   float distanceTo(Sprite other)
   {
-    float delX = other.x - this.x;
-    float delY = other.y - this.y;
+    float delX = other.location.x - this.location.x;
+    float delY = other.location.y - this.location.y;
     return sqrt(delX*delX + delY*delY);
   }
   
@@ -160,43 +163,43 @@ abstract class Sprite
     // If I hit the LEFT arrow, go Left
     if(keyCode == LEFT)
     {
-      dx = -1;
-      dy = 0;
+      velocity.x = -1;
+      velocity.y = 0;
     }
     // if I hit the RIGHT arrow, go Right
     else if(keyCode == RIGHT)
     {
-      dx = 1;
-      dy = 0;
+      velocity.x = 1;
+      velocity.y = 0;
     }
     // if I hit the UP arrow, go Up
     if(keyCode == UP)
     {
-      dy = -1;
-      dx = 0;
+      velocity.y = -1;
+      velocity.x = 0;
     }
     // if I hit the DOWN arrow, go Down
     else if(keyCode == DOWN)
     {
-      dy = 1;
-      dx = 0;
+      velocity.y = 1;
+      velocity.x = 0;
     }
     // if I hit the Space Bar, Stop
     if(keyCode == ' ')
     {
-      dx = 0;
-      dy = 0;
+      velocity.x = 0;
+      velocity.y = 0;
     }
     
     // move x and y in the appropriate way
-    x = x + dx;
-    y = y + dy;
+    location.x = location.x + velocity.x;
+    location.y = location.y + velocity.y;
     
     // make sure we don't go out of bounds
-    if(x < 0) x += width;
-    if(x > width) x -= width;
-    if(y < 0) y += height;
-    if(y > height) y -= height;
+    if(location.x < 0) location.x += width;
+    if(location.x > width) location.x -= width;
+    if(location.y < 0) location.y += height;
+    if(location.y > height) location.y -= height;
   }
   
   // a Sprite itself is abstract and does not actually know
